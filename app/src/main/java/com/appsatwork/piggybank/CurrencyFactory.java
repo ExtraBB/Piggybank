@@ -2,6 +2,7 @@ package com.appsatwork.piggybank;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -36,5 +37,15 @@ public class CurrencyFactory
         Resources r = c.getResources();
         String name = c.getPackageName();
         return r.getString(r.getIdentifier(curr.getCurrencyCode(), "string", name));
+    }
+
+    //For the value of 1 USD
+    public int DigitsBeforeDecimal(Currency curr, Context c)
+    {
+        Resources r = c.getResources();
+        String name = c.getPackageName();
+        TypedValue typedValue = new TypedValue();
+        r.getValue(r.getIdentifier(curr.getCurrencyCode(), "dimen", name), typedValue, true);
+        return (int)Math.ceil(Math.log10(typedValue.getFloat()));
     }
 }
