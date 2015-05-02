@@ -2,4 +2,10 @@
     <string name="app_name">Piggybank</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--NumberView-->
+    <string name="number_view_content_char_default">0</string>
+
+    <!--Currency Symbols-->
+    <string name="curr_eur">€</string>
 </resources>

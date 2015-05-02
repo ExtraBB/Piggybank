@@ -1,31 +1,45 @@
 package com.appsatwork.piggybank;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity
 {
+
+    private static final double HOURLYWAGE = 7.70;
+    private static final int MSPERUPDATE = 10;
+
+    private double msWage;
+    private double runningTotal = 0;
+
+    Timer timer;
+    TimerTask updateCounterTask;
+    final Handler handler = new Handler();
+
+    TextView counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null)
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+
+        //Initialize counter
+        counter = (TextView)findViewById(R.id.counter);
+
+        //Calculate wage per millisecond
+        msWage = HOURLYWAGE / (60*60*1000);
+
+        //Start the timer to update the counter
+        startTimer();
     }
 
 
@@ -54,22 +68,29 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment
-    {
+    public void startTimer() {
 
-        public PlaceholderFragment()
-        {
-        }
+        //Initialize timer
+        timer = new Timer();
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState)
-        {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+        //Initialize timer task
+        initializeTimerTask();
+
+        //Run timer task every millisecond
+        timer.scheduleAtFixedRate(updateCounterTask, 0, MSPERUPDATE); //
     }
+
+    private void initializeTimerTask() {
+        updateCounterTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        runningTotal += MSPERUPDATE * msWage;
+                        counter.setText(Double.toString(runningTotal));
+                    }
+                });
+            }
+        };
+    }
+
 }
