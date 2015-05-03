@@ -26,7 +26,7 @@
     <string name="BYR">Belarus Ruble</string>
     <string name="BZD">Belize Dollar</string>
     <string name="CAD">Canada Dollar</string>
-    <string name="CDF">Congo/Kinshasa Franc</string>
+    <string name="CDF">Congo\/Kinshasa Franc</string>
     <string name="CHF">Switzerland Franc</string>
     <string name="CLP">Chile Peso</string>
     <string name="CNY">China Yuan Renminbi</string>
@@ -45,7 +45,7 @@
     <string name="ETB">Ethiopia Birr</string>
     <string name="EUR">Euro Member Countries</string>
     <string name="FJD">Fiji Dollar</string>
-    <string name="FKP">Falkland Islands (Malvinas) Pound</string>
+    <string name="FKP">Falkland Islands \(Malvinas\) Pound</string>
     <string name="GBP">United Kingdom Pound</string>
     <string name="GEL">Georgia Lari</string>
     <string name="GGP">Guernsey Pound</string>
@@ -75,8 +75,8 @@
     <string name="KGS">Kyrgyzstan Som</string>
     <string name="KHR">Cambodia Riel</string>
     <string name="KMF">Comoros Franc</string>
-    <string name="KPW">Korea (North) Won</string>
-    <string name="KRW">Korea (South) Won</string>
+    <string name="KPW">Korea \(North\) Won</string>
+    <string name="KRW">Korea \(South\) Won</string>
     <string name="KWD">Kuwait Dinar</string>
     <string name="KYD">Cayman Islands Dollar</string>
     <string name="KZT">Kazakhstan Tenge</string>
@@ -90,7 +90,7 @@
     <string name="MDL">Moldova Leu</string>
     <string name="MGA">Madagascar Ariary</string>
     <string name="MKD">Macedonia Denar</string>
-    <string name="MMK">Myanmar (Burma) Kyat</string>
+    <string name="MMK">Myanmar \(Burma\) Kyat</string>
     <string name="MNT">Mongolia Tughrik</string>
     <string name="MOP">Macau Pataca</string>
     <string name="MRO">Mauritania Ouguiya</string>
@@ -130,7 +130,7 @@
     <string name="SOS">Somalia Shilling</string>
     <string name="SPL">	Seborga Luigino</string>
     <string name="SRD">Suriname Dollar</string>
-    <string name="STD">São Tomé and Príncipe Dobra</string>
+    <string name="STD">São Tom\é and Príncipe Dobra</string>
     <string name="SVC">El Salvador Colon</string>
     <string name="SYP">Syria Pound</string>
     <string name="SZL">Swaziland Lilangeni</string>
@@ -138,7 +138,7 @@
     <string name="TJS">Tajikistan Somoni</string>
     <string name="TMT">Turkmenistan Manat</string>
     <string name="TND">Tunisia Dinar</string>
-    <string name="TOP">Tonga Pa'anga</string>
+    <string name="TOP">Tonga Pa\'anga</string>
     <string name="TRY">Turkey Lira</string>
     <string name="TTD">Trinidad and Tobago Dollar</string>
     <string name="TVD">Tuvalu Dollar</string>
@@ -153,11 +153,11 @@
     <string name="VND">Viet Nam Dong</string>
     <string name="VUV">Vanuatu Vatu</string>
     <string name="WST">Samoa Tala</string>
-    <string name="XAF">Communauté Financière Africaine (BEAC) CFA Franc BEAC</string>
+    <string name="XAF">Communaut\é Financière Africaine \(BEAC\) CFA Franc BEAC</string>
     <string name="XCD">East Caribbean Dollar</string>
     <string name="XDR">International Monetary Fund (IMF) Special Drawing Rights</string>
-    <string name="XOF">Communauté Financière Africaine (BCEAO) Franc</string>
-    <string name="XPF">Comptoirs Français du Pacifique (CFP) Franc</string>
+    <string name="XOF">Communaut\é Financière Africaine \(BCEAO\) Franc</string>
+    <string name="XPF">Comptoirs Français du Pacifique \(CFP\) Franc</string>
     <string name="YER">Yemen Rial</string>
     <string name="ZAR">South Africa Rand</string>
     <string name="ZMW">Zambia Kwacha</string>

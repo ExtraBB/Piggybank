@@ -5,26 +5,43 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity
 {
+    //Currency
+    Currency currency;
+    int fractionDigits;
+    String symbol;
 
-    private static final double HOURLYWAGE = 7.70;
+    //Wage
+    private static final double HOURLYWAGE = 12.50;
     private static final int MSPERUPDATE = 10;
-
     private double msWage;
     private double runningTotal = 0;
 
+    //Timer
     Timer timer;
     TimerTask updateCounterTask;
     final Handler handler = new Handler();
 
-    TextView counter;
+    //Views
+    AutoResizingTextView counter;
+    Button startStopButton;
+    Button resetButton;
+
+    //Saving data onPause
+    long millisWhenPaused;
+
+    //Bug workaround: http://stackoverflow.com/questions/5033012/auto-scale-textview-text-to-fit-within-bounds/21851157#21851157
+    final String DOUBLE_BYTE_SPACE = "\u3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,16 +49,41 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Initialize counter
-        counter = (TextView)findViewById(R.id.counter);
+        //Initialize Currency
+        currency = CurrencyFactory.GetCurrency(CurrencyCode.EUR);
+        fractionDigits = currency.getDefaultFractionDigits();
+        symbol = currency.getSymbol();
+
+        //Initialize Views
+        counter = (AutoResizingTextView) findViewById(R.id.counter);
+        startStopButton = (Button) findViewById(R.id.startstopbutton);
+        resetButton = (Button) findViewById(R.id.resetbutton);
 
         //Calculate wage per millisecond
-        msWage = HOURLYWAGE / (60*60*1000);
-
-        //Start the timer to update the counter
-        startTimer();
+        msWage = HOURLYWAGE / (60 * 60 * 1000);
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        stopTimer();
+        millisWhenPaused = System.currentTimeMillis();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if(millisWhenPaused != 0)
+        {
+            long currentTimeMillis = System.currentTimeMillis();
+            runningTotal += (currentTimeMillis - millisWhenPaused) * msWage;
+        }
+        startTimer();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -68,8 +110,8 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void startTimer() {
-
+    public void startTimer()
+    {
         //Initialize timer
         timer = new Timer();
 
@@ -77,20 +119,67 @@ public class MainActivity extends ActionBarActivity
         initializeTimerTask();
 
         //Run timer task every millisecond
-        timer.scheduleAtFixedRate(updateCounterTask, 0, MSPERUPDATE); //
+        timer.scheduleAtFixedRate(updateCounterTask, MSPERUPDATE, MSPERUPDATE);
+
+        //Update button
+        startStopButton.setText(this.getText(R.string.startstopbutton_stop));
     }
 
-    private void initializeTimerTask() {
-        updateCounterTask = new TimerTask() {
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
+    public void stopTimer()
+    {
+        if (timer != null)
+            timer.cancel();
+        timer = null;
+
+        //Update button
+        startStopButton.setText(this.getText(R.string.startstopbutton_start));
+    }
+
+    private void initializeTimerTask()
+    {
+        updateCounterTask = new TimerTask()
+        {
+            public void run()
+            {
+                handler.post(new Runnable()
+                {
+                    public void run()
+                    {
                         runningTotal += MSPERUPDATE * msWage;
-                        counter.setText(Double.toString(runningTotal));
+                        updateCounterText();
                     }
                 });
             }
         };
     }
 
+    private void updateCounterText()
+    {
+
+        BigDecimal rounded = new BigDecimal(runningTotal).setScale(fractionDigits, BigDecimal.ROUND_HALF_UP);
+
+        //Bug workaround as described in member variable DOUBLE_BYTE_SPACE
+        String fixString = "";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1
+                && android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            fixString = DOUBLE_BYTE_SPACE;
+        }
+
+        counter.setText(fixString + symbol + rounded.toString() + fixString);
+    }
+
+    public void ResetButtonPressed(View view)
+    {
+        stopTimer();
+        runningTotal = 0;
+        updateCounterText();
+    }
+
+    public void StartStopButtonPressed(View view)
+    {
+        if(timer != null)
+            stopTimer();
+        else
+            startTimer();
+    }
 }

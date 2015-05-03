@@ -14,25 +14,30 @@ import java.util.Locale;
  */
 public class CurrencyFactory
 {
-    public List<Currency> GetAllCurrencies()
+    public static List<Currency> GetAllCurrencies()
     {
         List<Currency> result = new ArrayList<Currency>();
-        for(CurrencyCode cc : CurrencyCode.values())
+        for (CurrencyCode cc : CurrencyCode.values())
             result.add(Currency.getInstance(cc.name()));
         return result;
     }
 
-    public Currency GetLocalCurrency()
+    public static Currency GetLocalCurrency()
     {
         return Currency.getInstance(Locale.getDefault());
     }
 
-    public Currency GetCurrency(String currencyCode)
+    public static Currency GetCurrency(String currencyCode)
     {
         return Currency.getInstance(currencyCode);
     }
 
-    public String GetCurrencyName(Currency curr, Context c)
+    public static Currency GetCurrency(CurrencyCode currencyCode)
+    {
+        return Currency.getInstance(currencyCode.name());
+    }
+
+    public static String GetCurrencyName(Currency curr, Context c)
     {
         Resources r = c.getResources();
         String name = c.getPackageName();
@@ -40,12 +45,12 @@ public class CurrencyFactory
     }
 
     //For the value of 1 USD
-    public int DigitsBeforeDecimal(Currency curr, Context c)
+    public static int DigitsBeforeDecimal(Currency curr, Context c)
     {
         Resources r = c.getResources();
         String name = c.getPackageName();
         TypedValue typedValue = new TypedValue();
         r.getValue(r.getIdentifier(curr.getCurrencyCode(), "dimen", name), typedValue, true);
-        return (int)Math.ceil(Math.log10(typedValue.getFloat()));
+        return (int) Math.ceil(Math.log10(typedValue.getFloat()));
     }
 }
