@@ -48,7 +48,6 @@
     <item name="FKP" format="float" type="dimen">0.660549974</item>
     <item name="GBP" format="float" type="dimen">0.660549974</item>
     <item name="GEL" format="float" type="dimen">2.329799891</item>
-    <item name="GGP" format="float" type="dimen">0.660549974</item>
     <item name="GHS" format="float" type="dimen">3.855</item>
     <item name="GIP" format="float" type="dimen">0.660549974</item>
     <item name="GMD" format="float" type="dimen">43.05</item>
@@ -62,12 +61,10 @@
     <item name="HUF" format="float" type="dimen">271.2755</item>
     <item name="IDR" format="float" type="dimen">13010.2</item>
     <item name="ILS" format="float" type="dimen">3.885975</item>
-    <item name="IMP" format="float" type="dimen">0.660549974</item>
     <item name="INR" format="float" type="dimen">63.726</item>
     <item name="IQD" format="float" type="dimen">1184</item>
     <item name="IRR" format="float" type="dimen">28369</item>
     <item name="ISK" format="float" type="dimen">130.525</item>
-    <item name="JEP" format="float" type="dimen">0.660549974</item>
     <item name="JMD" format="float" type="dimen">114.1999969</item>
     <item name="JOD" format="float" type="dimen">0.708000004</item>
     <item name="JPY" format="float" type="dimen">120.175</item>
@@ -128,7 +125,6 @@
     <item name="SHP" format="float" type="dimen">0.660549974</item>
     <item name="SLL" format="float" type="dimen">4360</item>
     <item name="SOS" format="float" type="dimen">696</item>
-    <item name="SPL" format="float" type="dimen">0.166666667</item>
     <item name="SRD" format="float" type="dimen">3.25</item>
     <item name="STD" format="float" type="dimen">21780</item>
     <item name="SVC" format="float" type="dimen">8.75</item>
@@ -141,7 +137,6 @@
     <item name="TOP" format="float" type="dimen">1.982750074</item>
     <item name="TRY" format="float" type="dimen">2.70824</item>
     <item name="TTD" format="float" type="dimen">6.322000027</item>
-    <item name="TVD" format="float" type="dimen">1.273641979</item>
     <item name="TWD" format="float" type="dimen">30.747</item>
     <item name="TZS" format="float" type="dimen">1988</item>
     <item name="UAH" format="float" type="dimen">21</item>

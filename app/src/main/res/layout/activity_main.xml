@@ -7,6 +7,24 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame">
 
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/spinner"/>
+
+
+    <EditText
+        android:id="@+id/wageEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
     <Button
         android:id="@+id/startstopbutton"
         android:layout_width="fill_parent"
@@ -23,17 +41,23 @@
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
 
-
-        <com.appsatwork.piggybank.AutoResizingTextView
-            android:id="@+id/counter"
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:background="#FF2255"
-            android:ellipsize="none"
+        <TextView
+            android:id="@+id/symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="1"
-            android:textSize="500sp"/>
-        <!-- textsize = max size -->
+            android:textSize="80sp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"/>
+
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textSize="80sp"/>
 
     </LinearLayout>
 

@@ -3,6 +3,11 @@ package com.appsatwork.piggybank;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -10,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Broodrooster on 2-5-2015.
+ * Created by Bruno on 2-5-2015.
  */
 public class CurrencyFactory
 {
@@ -51,6 +56,7 @@ public class CurrencyFactory
         String name = c.getPackageName();
         TypedValue typedValue = new TypedValue();
         r.getValue(r.getIdentifier(curr.getCurrencyCode(), "dimen", name), typedValue, true);
-        return (int) Math.ceil(Math.log10(typedValue.getFloat()));
+        return (int) Math.ceil(Math.log10(typedValue.getFloat())) + 1;
     }
 }
+

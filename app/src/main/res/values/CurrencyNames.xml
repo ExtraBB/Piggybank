@@ -48,7 +48,6 @@
     <string name="FKP">Falkland Islands \(Malvinas\) Pound</string>
     <string name="GBP">United Kingdom Pound</string>
     <string name="GEL">Georgia Lari</string>
-    <string name="GGP">Guernsey Pound</string>
     <string name="GHS">Ghana Cedi</string>
     <string name="GIP">Gibraltar Pound</string>
     <string name="GMD">Gambia Dalasi</string>
@@ -62,12 +61,10 @@
     <string name="HUF">Hungary Forint</string>
     <string name="IDR">Indonesia Rupiah</string>
     <string name="ILS">Israel Shekel</string>
-    <string name="IMP">Isle of Man Pound</string>
     <string name="INR">India Rupee</string>
     <string name="IQD">Iraq Dinar</string>
     <string name="IRR">Iran Rial</string>
     <string name="ISK">Iceland Krona</string>
-    <string name="JEP">Jersey Pound</string>
     <string name="JMD">Jamaica Dollar</string>
     <string name="JOD">Jordan Dinar</string>
     <string name="JPY">Japan Yen</string>
@@ -128,7 +125,6 @@
     <string name="SHP">Saint Helena Pound</string>
     <string name="SLL">Sierra Leone Leone</string>
     <string name="SOS">Somalia Shilling</string>
-    <string name="SPL">	Seborga Luigino</string>
     <string name="SRD">Suriname Dollar</string>
     <string name="STD">São Tom\é and Príncipe Dobra</string>
     <string name="SVC">El Salvador Colon</string>
@@ -141,7 +137,6 @@
     <string name="TOP">Tonga Pa\'anga</string>
     <string name="TRY">Turkey Lira</string>
     <string name="TTD">Trinidad and Tobago Dollar</string>
-    <string name="TVD">Tuvalu Dollar</string>
     <string name="TWD">Taiwan New Dollar</string>
     <string name="TZS">Tanzania Shilling</string>
     <string name="UAH">Ukraine Hryvnia</string>

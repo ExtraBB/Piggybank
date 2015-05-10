@@ -6,61 +6,65 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity
 {
-    //Currency
-    Currency currency;
-    int fractionDigits;
-    String symbol;
-
-    //Wage
-    private static final double HOURLYWAGE = 12.50;
-    private static final int MSPERUPDATE = 10;
-    private double msWage;
-    private double runningTotal = 0;
+    //Account data
+    Account account;
+    Currency defaultCurrency;
+    Wage defaultWage;
 
     //Timer
     Timer timer;
     TimerTask updateCounterTask;
     final Handler handler = new Handler();
+    private static final int MSPERUPDATE = 10;
 
     //Views
-    AutoResizingTextView counter;
+    TextView symbol;
+    TextView counter;
     Button startStopButton;
     Button resetButton;
+    Spinner spinner;
+    EditText wageEdit;
 
     //Saving data onPause
     long millisWhenPaused;
 
-    //Bug workaround: http://stackoverflow.com/questions/5033012/auto-scale-textview-text-to-fit-within-bounds/21851157#21851157
-    final String DOUBLE_BYTE_SPACE = "\u3000";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Initialize Currency
-        currency = CurrencyFactory.GetCurrency(CurrencyCode.EUR);
-        fractionDigits = currency.getDefaultFractionDigits();
-        symbol = currency.getSymbol();
+        //Default currency and wage
+        Currency defaultCurrency = CurrencyFactory.GetLocalCurrency();
+        account = new Account(defaultCurrency, new Wage(Math.pow(10, CurrencyFactory.DigitsBeforeDecimal(defaultCurrency, this) - 1)));
 
         //Initialize Views
-        counter = (AutoResizingTextView) findViewById(R.id.counter);
+        symbol = (TextView) findViewById(R.id.symbol);
+        counter = (TextView) findViewById(R.id.counter);
         startStopButton = (Button) findViewById(R.id.startstopbutton);
         resetButton = (Button) findViewById(R.id.resetbutton);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        wageEdit = (EditText) findViewById(R.id.wageEdit);
 
-        //Calculate wage per millisecond
-        msWage = HOURLYWAGE / (60 * 60 * 1000);
+        wageEdit.setText(Double.toString(account.Wage.Hourly));
+        populateSpinner();
     }
 
     @Override
@@ -80,7 +84,7 @@ public class MainActivity extends ActionBarActivity
         if(millisWhenPaused != 0)
         {
             long currentTimeMillis = System.currentTimeMillis();
-            runningTotal += (currentTimeMillis - millisWhenPaused) * msWage;
+            account.RunningTotal += (currentTimeMillis - millisWhenPaused) * account.Wage.MillisecondWage;
         }
         startTimer();
     }
@@ -108,6 +112,21 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void populateSpinner()
+    {
+        List<String> content = new ArrayList<>();
+        for(Currency c : CurrencyFactory.GetAllCurrencies())
+            content.add(c.getCurrencyCode() + " - " + CurrencyFactory.GetCurrencyName(c, this));
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, content);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new CurrencySelectedListener());
+        spinner.setSelection(CurrencyFactory.GetAllCurrencies().indexOf(account.Currency));
     }
 
     public void startTimer()
@@ -145,7 +164,7 @@ public class MainActivity extends ActionBarActivity
                 {
                     public void run()
                     {
-                        runningTotal += MSPERUPDATE * msWage;
+                        account.RunningTotal += MSPERUPDATE * account.Wage.MillisecondWage;
                         updateCounterText();
                     }
                 });
@@ -155,23 +174,14 @@ public class MainActivity extends ActionBarActivity
 
     private void updateCounterText()
     {
-
-        BigDecimal rounded = new BigDecimal(runningTotal).setScale(fractionDigits, BigDecimal.ROUND_HALF_UP);
-
-        //Bug workaround as described in member variable DOUBLE_BYTE_SPACE
-        String fixString = "";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1
-                && android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            fixString = DOUBLE_BYTE_SPACE;
-        }
-
-        counter.setText(fixString + symbol + rounded.toString() + fixString);
+        symbol.setText(account.Symbol);
+        counter.setText(account.ToString());
     }
 
     public void ResetButtonPressed(View view)
     {
         stopTimer();
-        runningTotal = 0;
+        account.Reset();
         updateCounterText();
     }
 
@@ -181,5 +191,21 @@ public class MainActivity extends ActionBarActivity
             stopTimer();
         else
             startTimer();
+    }
+
+
+    public class CurrencySelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            TextView tv = (TextView)view;
+            Currency c = CurrencyFactory.GetCurrency(CurrencyCode.valueOf(tv.getText().subSequence(0,3).toString()));
+            account.SetCurrency(c);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+        }
+
     }
 }

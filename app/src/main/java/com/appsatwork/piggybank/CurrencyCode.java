@@ -1,7 +1,7 @@
 package com.appsatwork.piggybank;
 
 /**
- * Created by Broodrooster on 2-5-2015.
+ * Created by Bruno on 2-5-2015.
  */
 public enum CurrencyCode
 {
@@ -53,7 +53,6 @@ public enum CurrencyCode
     FKP,
     GBP,
     GEL,
-    GGP,
     GHS,
     GIP,
     GMD,
@@ -67,12 +66,10 @@ public enum CurrencyCode
     HUF,
     IDR,
     ILS,
-    IMP,
     INR,
     IQD,
     IRR,
     ISK,
-    JEP,
     JMD,
     JOD,
     JPY,
@@ -133,7 +130,6 @@ public enum CurrencyCode
     SHP,
     SLL,
     SOS,
-    SPL,
     SRD,
     STD,
     SVC,
@@ -146,7 +142,6 @@ public enum CurrencyCode
     TOP,
     TRY,
     TTD,
-    TVD,
     TWD,
     TZS,
     UAH,
